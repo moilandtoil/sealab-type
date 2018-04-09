@@ -14,7 +14,7 @@ class ValidType extends BaseType {
     `
   }
 
-  resolver(args, context, info) {
+  resolver() {
     return {
       id: (value) => {
         return value.id;
@@ -34,7 +34,7 @@ class ComplexType extends BaseType {
     this.typeDef = `doesn't matter`;
   }
 
-  resolver(args, context, info) {
+  resolver() {
     return {
       callService: (value) => {
         return this.service(value);

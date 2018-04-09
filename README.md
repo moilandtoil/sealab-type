@@ -1,7 +1,7 @@
 # Overview
 Sealab-type allows for the creation of extendable GraphQL types with
 dependency injection. Also includes a type manager for registering the
- types with a [sealab-schema-builder](1) sealab-schema-builder` instance.
+ types with a [sealab-schema-builder](1) instance.
 
 
 # Usage
@@ -9,6 +9,22 @@ Create type objects by extending the `BaseType` class.  Configure the
 type name and definition in the constructor and define a resolver
 function. The helper methods `service`, `logger`, `debug`, `info`, and
 `error` will then be available to the resolver.
+
+## BaseType
+The base type is an extendable class, which should implement a
+`constructor` and `resolver` method.
+The constructor should accept the parameter of `application`, and call
+the parent constructor, passing it.  The constructor should define the
+properties `typeName` and `typeDef`.  The resolver should return an
+object that will resolve the typeDef.
+
+## TypeManager
+The type manager should be instantiated with a `SchemaBuilder` object
+from the [sealab-schema-builder](1) repo.  It has two methods,
+`registerType` and `registerTypes`.  The first parameter for these
+methods should be a single class definition or array of class
+definitions respectively.  The second parameter should be the
+application container.
 
 # Example
 ```
@@ -25,7 +41,7 @@ class CoolType extends BaseType {
     `
   }
 
-  resolver(args, context, info) {
+  resolver() {
     return {
       id: (value) => {
         return value.id;

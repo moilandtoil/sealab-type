@@ -32,6 +32,12 @@ class TypeManager {
       typeInstance.resolver.bind(typeInstance)
     );
   }
+
+  registerTypes(typeClasses, application) {
+    for(let typeClass of typeClasses) {
+      this.registerType(typeClass, application);
+    }
+  }
 }
 
 module.exports = TypeManager;

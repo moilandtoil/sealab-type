@@ -15,7 +15,7 @@ class ValidType extends BaseType {
     `
   }
 
-  resolver(args, context, info) {
+  resolver() {
     return {
       id: (value) => {
         return value.id;
@@ -24,6 +24,33 @@ class ValidType extends BaseType {
         return value.foo;
       }
     }
+  }
+}
+
+class Valid1 extends BaseType {
+  constructor(application) {
+    super(application);
+    this.typeName = "Valid1";
+    this.typeDef = `
+      type Valid1 {}
+    `
+  }
+
+  resolver() {
+    return {}
+  }
+}
+class Valid2 extends BaseType {
+  constructor(application) {
+    super(application);
+    this.typeName = "Valid2";
+    this.typeDef = `
+      type Valid2 {}
+    `
+  }
+
+  resolver() {
+    return {};
   }
 }
 
@@ -37,7 +64,7 @@ class NoName extends BaseType {
     `
   }
 
-  resolver(args, context, info) {
+  resolver() {
     return {
       foo: (value) => {
         return value.foo;
@@ -52,7 +79,7 @@ class NoTypeDef extends BaseType {
     this.typeName = "ValidType";
   }
 
-  resolver(args, context, info) {
+  resolver() {
     return {
       id: (value) => {
         return value.id;
@@ -126,5 +153,28 @@ describe("Check that TypeManager", () => {
         typeManager.registerType(NoResolver, application);
       }).toThrow();
     });
+  });
+
+  describe("when registering multpiple classes at once", () => {
+    test("works with no classes", () => {
+      expect(() => {
+        typeManager.registerTypes([], application);
+      }).not.toThrow();
+      expect(typeManager.schemaBuilder.typeDefs['null'].length).toEqual(0);
+    });
+
+    test("works with one classes", () => {
+      expect(() => {
+        typeManager.registerTypes([Valid1], application);
+      }).not.toThrow();
+      expect(typeManager.schemaBuilder.typeDefs['null'].length).toEqual(1);
+    });
+
+    test("works with multiple classes", () => {
+      expect(() => {
+        typeManager.registerTypes([Valid1, Valid2], application);
+      }).not.toThrow();
+      expect(typeManager.schemaBuilder.typeDefs['null'].length).toEqual(2);
+    })
   });
 });
