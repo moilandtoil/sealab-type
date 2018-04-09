@@ -99,25 +99,31 @@ describe("Check that TypeManager", () => {
   describe("when registering type", () => {
     test("works with valid type", () => {
       expect(() => {
-        typeManager.registerType(ValidType);
+        typeManager.registerType(ValidType, application);
       }).not.toThrow();
+    });
+
+    test("failed if application not passed", () => {
+      expect(() => {
+        typeManager.registerType(ValidType);
+      }).toThrow();
     });
 
     test("fails with no type name", () => {
       expect(() => {
-        typeManager.registerType(NoName);
+        typeManager.registerType(NoName, application);
       }).toThrow();
     });
 
     test("fails with no type def", () => {
       expect(() => {
-        typeManager.registerType(NoTypeDef);
+        typeManager.registerType(NoTypeDef, application);
       }).toThrow();
     });
 
     test("fails with no type resolver", () => {
       expect(() => {
-        typeManager.registerType(NoResolver);
+        typeManager.registerType(NoResolver, application);
       }).toThrow();
     });
   });

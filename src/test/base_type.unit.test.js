@@ -75,19 +75,10 @@ describe("When instantiating type", () => {
     }))
   });
 
-  test("execute should call resolver", () => {
-    expect(type.execute()).resolves.toEqual(expect.objectContaining({
-      id: expect.any(Function),
-      foo: expect.any(Function)
-    }));
-  });
-
-  test("services should be callable from resolver", (done) => {
+  test("services should be callable from resolver", () => {
     let serviceType = new ComplexType(application);
-    serviceType.execute().then((result) => {
-      expect(result.callService("foo")).toEqual(true);
-      done();
-    });
+    let resolver = serviceType.resolver();
+    expect(resolver.callService("foo")).toEqual(true);
   });
 
   describe("with setting an application", () => {

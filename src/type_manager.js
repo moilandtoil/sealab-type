@@ -8,6 +8,10 @@ class TypeManager {
   }
 
   registerType(typeClass, application) {
+    if (!application) {
+      throw new Error("Application container must be passed");
+    }
+
     const typeInstance = new typeClass(application);
 
     if (!typeInstance.typeName || typeInstance.typeName.length == 0) {
@@ -25,7 +29,7 @@ class TypeManager {
     this.schemaBuilder.addType(
       typeInstance.typeName,
       typeInstance.typeDef,
-      typeInstance.execute.bind(typeInstance)
+      typeInstance.resolver.bind(typeInstance)
     );
   }
 }

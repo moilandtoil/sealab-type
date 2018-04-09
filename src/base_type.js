@@ -12,19 +12,6 @@ class BaseType {
     throw Error("Incomplete type implementation");
   }
 
-  execute() {
-    let result = Promise.resolve(true);
-    try {
-      this.debug(`Executing GQL type resolver '${this.typeName}'`);
-      return result.then(() => {
-        return this.resolver(...arguments)
-      });
-    } catch (err) {
-      this.debug(`Error occurred executing type resolver... "${err.message}"`);
-      throw err;
-    }
-  }
-
   resolverOverwritten() {
     return this.resolver !== BaseType.prototype.resolver;
   }
