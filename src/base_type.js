@@ -21,7 +21,7 @@ class BaseType {
     if (this.application === null) {
       throw new Error("Application container must be attached to service");
     }
-    return this.application.logger;
+    return this.application.logger();
   }
 
   debug(message, ...additional) {

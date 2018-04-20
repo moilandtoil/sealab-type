@@ -52,10 +52,12 @@ describe("When instantiating type", () => {
   beforeEach(() => {
     logFunc = jest.fn();
     application = {
-      logger: {
-        error: logFunc,
-        debug: logFunc,
-        info: logFunc,
+      logger: () => {
+        return {
+          error: logFunc,
+          debug: logFunc,
+          info: logFunc,
+        };
       },
       service: (name) => {
         return true;

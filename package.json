@@ -1,6 +1,6 @@
 {
   "name": "@moilandtoil/sealab-type",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "GraphQL type object with sealab-application dependency injection",
   "main": "index.js",
   "scripts": {
