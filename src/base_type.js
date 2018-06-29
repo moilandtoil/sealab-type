@@ -36,6 +36,11 @@ class BaseType {
     this.logger().error(message, ...additional);
   }
 
+  model(modelName) {
+    this.ensureApplication();
+    return this.application.model(modelName);
+  }
+
   service(serviceName) {
     this.ensureApplication();
     return this.application.service(serviceName);

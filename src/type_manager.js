@@ -26,10 +26,20 @@ class TypeManager {
       throw new Error("Type must have a resolver");
     }
 
+    const resolver = typeInstance.resolver();
+    for (let property in resolver) {
+      if (!resolver.hasOwnProperty(property)) {
+        continue;
+      }
+      if (resolver[property] instanceof Function) {
+        resolver[property] = resolver[property].bind(typeInstance);
+      }
+    }
+
     this.schemaBuilder.addType(
       typeInstance.typeName,
       typeInstance.typeDef,
-      typeInstance.resolver.bind(typeInstance)
+      resolver
     );
   }
 

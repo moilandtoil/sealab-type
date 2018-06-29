@@ -61,6 +61,9 @@ describe("When instantiating type", () => {
       },
       service: (name) => {
         return true;
+      },
+      model: (name) => {
+        return true;
       }
     };
 
@@ -86,6 +89,10 @@ describe("When instantiating type", () => {
   describe("with setting an application", () => {
     test("#service()", () => {
       expect(type.service("foo")).toEqual(true);
+    });
+
+    test("#model()", () => {
+      expect(type.model("foo")).toEqual(true);
     });
 
     test("#logger()", () => {
